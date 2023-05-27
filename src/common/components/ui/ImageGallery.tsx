@@ -22,7 +22,6 @@ const ImageGallery: React.FC = () => {
                 .then((data: Image[]) => setImages(data))
                 .catch(error => console.error('Error fetching images:', error));
         };
-
         fetchImages();
     }, []);
 
@@ -32,11 +31,9 @@ const ImageGallery: React.FC = () => {
 
     return (
         <section className="px-8 md:px-20 py-10">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 {images.map((image, i) => (
-                    <div className="grid gap-4" key={i}>
-                        <ImageCard src={image?.urls?.regular} alt={image?.alt_description} />
-                    </div>
+                    <ImageCard src={image?.urls?.regular} alt={image?.alt_description} key={i} />
                 ))}
             </div>
         </section>
