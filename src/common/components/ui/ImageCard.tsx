@@ -1,20 +1,31 @@
-import Image from 'next/image';
-import React from 'react'
-import { DownloadButton } from '../form';
+"use client";
+
+import Image from "next/image";
+import React, { useRef } from "react";
+import { DownloadButton } from "../form";
 
 type ImageType = {
-    src: string;
-    alt: string;
-}
+  src: string;
+  alt: string;
+};
 const ImageCard = ({ src, alt }: ImageType) => {
-    return (
-        <div className=''>
-            <div className='relative'>
-                <Image width={500} height={500} className="h-auto max-w-full rounded-lg" src={src} alt={alt} />
-                <DownloadButton />
-            </div>
-        </div>
-    )
-}
+  const imageURLRef = useRef<HTMLImageElement>(null);
 
-export default ImageCard
+  return (
+    <div className="">
+      <div className="relative">
+        <Image
+          width={500}
+          height={500}
+          className="h-auto max-w-full rounded-lg"
+          src={src}
+          alt={alt}
+          ref={imageURLRef}
+        />
+        <DownloadButton src={imageURLRef} alt={alt} />
+      </div>
+    </div>
+  );
+};
+
+export default ImageCard;
