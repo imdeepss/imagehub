@@ -17,7 +17,7 @@ const ImageCard = ({ src, alt }: ImageType) => {
         <Image
           width={500}
           height={500}
-          className="h-auto max-w-full rounded-lg"
+          className="h-auto max-w-full rounded-lg bg-grey"
           src={src}
           alt={alt}
           ref={imageURLRef}
