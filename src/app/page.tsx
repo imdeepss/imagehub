@@ -3,7 +3,7 @@ import ImageGalleryBackup from "@/common/components/ui/ImageGalleryBackup";
 
 export default function Home() {
   return (
-    <ImageGallery />
-    // <ImageGalleryBackup />
+    // <ImageGallery />
+    <ImageGalleryBackup />
   );
 }
