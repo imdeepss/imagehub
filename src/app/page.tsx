@@ -1,9 +1,8 @@
-import { ImageGallery } from "@/common/components/ui";
-import ImageGalleryBackup from "@/common/components/ui/ImageGalleryBackup";
+import { ImageGallery, ImageGalleryBackup } from "@/common/components/ui";
 
-export default function Home() {
+export default async function Home() {
   return (
-    // <ImageGallery />
     <ImageGalleryBackup />
   );
 }
+

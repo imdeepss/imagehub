@@ -2,7 +2,6 @@
 
 import React, { useEffect, useState } from "react";
 import ImageCard from "./ImageCard";
-import ImageSkeleton from "./Skeleton/ImageSkeleton";
 
 interface Image {
   id: string;
@@ -27,9 +26,6 @@ const ImageGallery: React.FC = () => {
     fetchImages();
   }, []);
 
-  if (images.length === 0) {
-    return <ImageSkeleton />;
-  }
 
   return (
     <section className="px-8 py-10 md:px-20">

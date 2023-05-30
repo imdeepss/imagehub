@@ -1,6 +1,5 @@
 import { getImagesUnsplashAPI } from "@/common/hooks";
 import Image from "next/image";
-import ImageSkeleton from "./Skeleton/ImageSkeleton";
 
 export const revalidate = 60; // revalidate every hour
 type SearchInputType = {
@@ -9,8 +8,9 @@ type SearchInputType = {
 const ImageGallery = async (): Promise<JSX.Element> => {
   const searchInput: SearchInputType = { search: "" };
   const imageDetails = await getImagesUnsplashAPI(searchInput);
+
   if (!imageDetails) {
-    return <ImageSkeleton />;
+    return <></>
   }
 
   const columns = 4;
@@ -21,11 +21,12 @@ const ImageGallery = async (): Promise<JSX.Element> => {
     )
   );
 
+
   return (
     <section className="px-8 py-10 md:px-20">
       <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
         {columnData.map((column, columnIndex) => (
-          <div className="flex flex-col flex-wrap gap-4" key={columnIndex}>
+          <div className="flex flex-wrap-reverse flex-col gap-4" key={columnIndex}>
             {column.map((image, imageIndex) => (
               <Image
                 key={imageIndex}
