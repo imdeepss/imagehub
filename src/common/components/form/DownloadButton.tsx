@@ -30,7 +30,7 @@ const DownloadButton: React.FC<DownloadButtonProps> = ({ src, alt }) => {
   return (
     <button
       type="button"
-      className="absolute bottom-2 right-2 rounded-md bg-grey p-2 shadow-inner md:bottom-5 md:right-5 md:px-3 md:py-2"
+      className="absolute bottom-2 right-2 rounded-md bg-grey p-1 shadow-inner"
       onClick={(e) => handleDownload(e, src.current?.src as string)}
     >
       <DownloadIcon />
