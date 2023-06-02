@@ -22,7 +22,9 @@ const ImageCard = ({ src, alt }: ImageType) => {
           alt={alt}
           ref={imageURLRef}
         />
-        <DownloadButton src={imageURLRef} alt={alt} />
+        {src &&
+          <DownloadButton src={imageURLRef} alt={alt} />
+        }
       </div>
     </div>
   );

@@ -6,8 +6,10 @@ const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
   title: 'ImageHub',
-  description: '- Discover a World of Captivating Wallpapers',
-}
+  description: 'Discover a World of Captivating Images and Wallpapers',
+  keyword: 'ImageHub, images, wallpapers, photography, picture hub, image gallery,image',
+};
+
 
 export default function RootLayout({
   children,

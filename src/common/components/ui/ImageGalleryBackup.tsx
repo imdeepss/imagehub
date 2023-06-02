@@ -1,16 +1,30 @@
-import { getImagesUnsplashAPI } from "@/common/hooks";
-import Image from "next/image";
+"use client";
 
-export const revalidate = 60; // revalidate every hour
-type SearchInputType = {
-  search: string;
-};
-const ImageGallery = async (): Promise<JSX.Element> => {
-  const searchInput: SearchInputType = { search: "" };
-  const imageDetails = await getImagesUnsplashAPI(searchInput);
+import { useEffect, useState } from 'react';
+import { getImagesUnsplashAPI } from '@/common/hooks';
+import ImageCard from './ImageCard';
+import { ImageType, SearchInputType } from '@/common/type';
+
+const ImageGallery = () => {
+  const [imageDetails, setImageDetails] = useState<ImageType[] | null>(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const searchInput: SearchInputType = { search: '' };
+        const details = await getImagesUnsplashAPI(searchInput);
+        setImageDetails(details);
+      } catch (error) {
+        console.error('An error occurred while fetching image details:', error);
+        setImageDetails(null);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   if (!imageDetails) {
-    return <></>
+    return <>Rate Limit Exceeded</>;
   }
 
   const columns = 4;
@@ -21,20 +35,16 @@ const ImageGallery = async (): Promise<JSX.Element> => {
     )
   );
 
-
   return (
     <section className="px-8 py-10 md:px-20">
       <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
         {columnData.map((column, columnIndex) => (
-          <div className="flex flex-wrap-reverse flex-col gap-4" key={columnIndex}>
+          <div className="flex flex-col gap-4" key={columnIndex}>
             {column.map((image, imageIndex) => (
-              <Image
+              <ImageCard
                 key={imageIndex}
-                className="h-auto max-w-full rounded-lg bg-grey"
                 src={image?.urls?.regular}
-                alt={image?.alt_description || "images"}
-                width={500}
-                height={500}
+                alt={image?.alt_description ?? 'images'}
               />
             ))}
           </div>

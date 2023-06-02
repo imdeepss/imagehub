@@ -1,9 +1,14 @@
+import React from 'react'
 import { ImageGallery, ImageGalleryBackup } from "@/common/components/ui";
+import { Analytics } from '@vercel/analytics/react';
 
-export default async function Home() {
+const Home = () => {
   return (
-    <ImageGallery />
-    // <ImageGalleryBackup />
-  );
+    <>
+      <Analytics />
+      <ImageGalleryBackup />
+    </>
+  )
 }
 
+export default Home
