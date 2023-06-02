@@ -24,7 +24,7 @@ const ImageGallery = () => {
   }, []);
 
   if (!imageDetails) {
-    return <>Rate Limit Exceeded</>;
+    return <></>;
   }
 
   const columns = 4;
