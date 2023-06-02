@@ -1,41 +1,52 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import ImageCard from "./ImageCard";
+import { useEffect, useState } from 'react';
+import { getImagesUnsplashAPI } from '@/common/hooks';
+import ImageCard from './ImageCard';
+import { ImageType, SearchInputType } from '@/common/type';
 
-interface Image {
-  id: string;
-  urls: {
-    regular: string;
-  };
-  alt_description: string;
-}
-
-const ImageGallery: React.FC = () => {
-  const [images, setImages] = useState<Image[]>([]);
+const ImageGallery = () => {
+  const [imageDetails, setImageDetails] = useState<ImageType[] | null>(null);
 
   useEffect(() => {
-    const fetchImages = () => {
-      fetch(
-        `https://api.unsplash.com/photos/random?client_id=${process.env.NEXT_PUBLIC_ACCESS_KEY}&count=12`
-      )
-        .then((response) => response.json())
-        .then((data: Image[]) => setImages(data))
-        .catch((error) => console.error("Error fetching images:", error));
+    const fetchData = async () => {
+      try {
+        const searchInput: SearchInputType = { search: '' };
+        const details = await getImagesUnsplashAPI(searchInput);
+        setImageDetails(details);
+      } catch (error) {
+        console.error('An error occurred while fetching image details:', error);
+        setImageDetails(null);
+      }
     };
-    fetchImages();
+
+    fetchData();
   }, []);
 
+  if (!imageDetails) {
+    return <></>;
+  }
+
+  const columns = 4;
+  const columnData = Array.from({ length: columns }, (_, i) =>
+    imageDetails.slice(
+      i * (imageDetails.length / columns),
+      (i + 1) * (imageDetails.length / columns)
+    )
+  );
 
   return (
     <section className="px-8 py-10 md:px-20">
       <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
-        {images.map((image, i) => (
-          <div className="grid gap-4" key={i}>
-            <ImageCard
-              src={image?.urls?.regular}
-              alt={image?.alt_description}
-            />
+        {columnData.map((column, columnIndex) => (
+          <div className="flex flex-col gap-4" key={columnIndex}>
+            {column.map((image, imageIndex) => (
+              <ImageCard
+                key={imageIndex}
+                src={image?.urls?.regular}
+                alt={image?.alt_description ?? 'images'}
+              />
+            ))}
           </div>
         ))}
       </div>
